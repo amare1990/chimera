@@ -1,17 +1,61 @@
-A - POST /trend.fetch
+# Technical Specification
 
-Request:
+---
+
+## API Contracts
+
+### POST /trend.fetch
+Request
 {
-  "region": "ET",
-  "limit": 10
+  "region": "string",
+  "limit": number
 }
 
-Response:
+Response
 {
-  "topics": ["AI agents", "automation"]
+  "topics": ["string"]
 }
 
-B — Database schema
+---
+
+### POST /content.generate
+Request
+{
+  "persona_id": "string",
+  "topic": "string"
+}
+
+Response
+{
+  "text": "string",
+  "media_urls": ["string"]
+}
+
+---
+
+## Agent Skill Interfaces
+
+### skill_fetch_trends
+Input:
+{ region, limit }
+
+Output:
+{ topics[] }
+
+### skill_generate_content
+Input:
+{ persona_id, topic }
+
+Output:
+{ text, media_urls }
+
+---
+
+## Database Schema
+
+Agent
+- id
+- persona_file
 
 Video
 - id
@@ -24,7 +68,3 @@ Trend
 - id
 - topic
 - score
-
-C — Agent Interfaces
-
-Define skill IO.
