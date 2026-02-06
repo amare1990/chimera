@@ -1,0 +1,15 @@
+reviews:
+  enabled: true
+
+checks:
+  - name: Spec Alignment
+    description: Verify code matches specs in specs/
+  - name: Security
+    description: Flag unsafe shell or network access
+  - name: MCP Enforcement
+    description: Ensure no raw filesystem or API calls
+
+rules:
+  - "All features must originate from a spec file"
+  - "No implementation without failing tests"
+  - "All external calls must use MCP"
