@@ -1,8 +1,19 @@
 # Technical Specification
 
----
 
-## API Contracts
+## Security Considerations
+
+- **Authentication:** All API endpoints require authentication (JWT, with future support for OAuth2).
+- **Authorization:** Role-based access control (RBAC) for agent actions and content approval.
+- **Data Protection:**
+  - All sensitive data (tokens, credentials, agent memory) is encrypted at rest and in transit (TLS 1.2+).
+  - No hardcoded secrets in code or configs.
+- **Agent Security:**
+  - Agents run in isolated containers (Docker) with least privilege.
+  - All agent actions are logged and auditable.
+- **Input Validation:** Strict schema validation for all API inputs (OpenAPI/JSON Schema).
+- **HITL Governance:** Low-confidence outputs are routed to human reviewers before publishing.
+
 
 ### POST /trend.fetch
 Request
