@@ -14,6 +14,23 @@
 - **Input Validation:** Strict schema validation for all API inputs (OpenAPI/JSON Schema).
 - **HITL Governance:** Low-confidence outputs are routed to human reviewers before publishing.
 
+---
+
+## Security Boundaries & Threat Model
+
+- **Threat Model:**
+  - External attackers may attempt to access agent APIs, memory, or impersonate agents.
+  - Internal threats include privilege escalation, unauthorized memory access, and rogue agent actions.
+  - Mitigations: RBAC, encrypted memory, audit logs, container isolation, input validation.
+- **Access Control Matrix:**
+  | Role      | View Agents | Edit Agents | Approve Content | Access Memory | View Logs |
+  |-----------|-------------|-------------|-----------------|--------------|----------|
+  | Admin     | Yes         | Yes         | Yes             | Yes          | Yes      |
+  | Reviewer  | Yes         | No          | Yes             | No           | Yes      |
+  | Observer  | Yes         | No          | No              | No           | Yes      |
+- **Boundary Diagram:**
+  - [ ] To be added: Diagram showing separation between frontend, backend, DB, agent containers, and external APIs.
+
 
 ### POST /trend.fetch
 Request
@@ -79,3 +96,18 @@ Trend
 - id
 - topic
 - score
+
+---
+
+## Database Lifecycle & Management
+
+- **CRUD Operations:**
+  - Agents, Videos, and Trends support Create, Read, Update, Delete via REST API and internal agent logic.
+  - Example: `POST /agent`, `GET /agent/{id}`, `PUT /agent/{id}`, `DELETE /agent/{id}`
+- **Agent Memory Management:**
+  - Agent memory is stored as encrypted key-value pairs, retrievable by agent ID and context.
+  - Memory can be updated, deleted, and audited.
+- **Migration Strategy:**
+  - DB schema versioned via migration scripts (e.g., Alembic for SQLAlchemy).
+  - Migrations are triggered automatically in CI/CD pipeline and on container startup.
+  - Rollback supported for failed migrations.

@@ -26,6 +26,32 @@ Chimera's frontend will provide a dashboard for monitoring, controlling, and rev
   - Role-based access (admin, reviewer, observer)
   - Secure session management
 
+## Frontend API Contracts
+
+- **GET /agents**
+  - Returns: `[ { id, name, status, persona, current_task } ]`
+- **GET /agents/{id}/memory**
+  - Returns: `{ memory: [ { key, value, timestamp } ] }`
+- **GET /trends?region=...&limit=...**
+  - Returns: `{ topics: [ { topic, score } ] }`
+- **POST /content/review**
+  - Input: `{ content_id, action: approve|edit|reject, notes }`
+  - Returns: `{ status }`
+- **GET /logs**
+  - Returns: `[ { agent_id, event, timestamp, details } ]`
+
+## UI Data Exchange Formats
+
+- **Agent:** `{ id, name, persona, status, current_task }`
+- **Trend:** `{ topic, score }`
+- **Content:** `{ id, text, media_urls, confidence, status }`
+- **Log:** `{ agent_id, event, timestamp, details }`
+
+## UI Flows (Expanded)
+1. **Login → Dashboard → Select Agent → View/Control → Memory/Logs**
+2. **Dashboard → Trend Explorer → Select Topic → Generate Content → Review/Publish**
+3. **Dashboard → Content Review → Approve/Reject/Publish → Log Action**
+
 ## User Flows
 1. **Login → Dashboard → Select Agent → View/Control**
 2. **Dashboard → Trend Explorer → Select Topic → Generate Content**
